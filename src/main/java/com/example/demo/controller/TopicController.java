@@ -3,8 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.model.Topic;
 import com.example.demo.service.TopicService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.lang.reflect.Array;
 import java.util.Arrays;
@@ -21,19 +20,23 @@ public class TopicController {
         return topicService.getAllTopics();
     }
 
-//    @RequestMapping("/topics/{id}")
-//    public List<Topic> createTopic(String id){
-//    }
-//
-//    @RequestMapping("/topics/{id}")
-//    public List<Topic> getTopicById(String id){
-//    }
-//
-//    @RequestMapping("/topics/{id}")
-//    public List<Topic> updateTopicById(String id){
-//    }
-//
-//    @RequestMapping("/topics/{id}")
-//    public List<Topic> deleteTopicById(String id){
-//    }
+    @RequestMapping(method = RequestMethod.POST, value = "/topics")
+    public Topic createTopic(@RequestBody Topic topic) {
+        return topicService.createTopic(topic);
+    }
+
+    @RequestMapping("/topics/{id}")
+    public Topic getTopicById(@PathVariable String id) {
+        return topicService.getTopicById(id);
+    }
+
+    @RequestMapping(method = RequestMethod.PUT, value = "/topics/{id}")
+    public Topic updateTopicById(@PathVariable String id, @RequestBody Topic topic) {
+        return topicService.updateTopic(id, topic);
+    }
+
+    @RequestMapping(method = RequestMethod.DELETE, value = "/topics/{id}")
+    public void deleteTopicById(@PathVariable String id) {
+        topicService.removeTopic(id);
+    }
 }
